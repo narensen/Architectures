@@ -29,4 +29,20 @@ class GPT2(nn.Module):
         logits = self.out_head(x)
         return logits
 
+class TransformerBlock(nn.Module):
+
+    def __init__(self, cfg):
+        super().__init__()
+
+    def forward(self, x):
+        return x
+
+class LayerNorm(nn.Module):
+
+    def __init__(self, cfg):
+        super().__init__()
+
+    def forward(self, x):
+        return x
+
         
