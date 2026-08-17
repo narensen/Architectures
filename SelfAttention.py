@@ -2,14 +2,14 @@ import torch.nn as nn
 import torch
 
 
-class SelfAttention_v1(nn.Module):
+class SelfAttention_v2(nn.Module):
 
     def __init__(self, d_in, d_out):
 
         super().__init__()
-        self.W_query = nn.Parameter(torch.rand(d_in, d_out))
-        self.W_key = nn.Parameter(torch.rand(d_in, d_out))
-        self.W_value = nn.Parameter(torch.rand(d_in, d_out))
+        self.W_query = nn.Linear(d_in, d_out, bias=False)
+        self.W_key = nn.Linear(d_in, d_out, bias=False)
+        self.W_value = nn.Linear(d_in, d_out, bias=False)
 
     def forward(self, x):
         keys = x @ self.W_key
