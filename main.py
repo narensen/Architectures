@@ -7,7 +7,7 @@ import torch
 from config import GPT_CONFIG_124M as cfg
 from services import *
 
-start_context = "Hello I am"
+start_context = "United States of America"
 encoded = tokenzier.encode(start_context)
 print(encoded)
 encoded_tensor = torch.tensor(encoded).unsqueeze(0)
