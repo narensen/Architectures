@@ -12,6 +12,8 @@ def token_ids_to_text(token_ids, tokenizer):
 
 def generate_text_simple(model, idx, max_new_tokens, context_size):
 
+    idx = idx.to("cuda")
+
     for _ in range(max_new_tokens):
         idx_cond = idx[:, -context_size:]
         with torch.no_grad():
