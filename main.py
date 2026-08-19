@@ -6,27 +6,19 @@ import torch.nn as nn
 import torch
 from config import GPT_CONFIG_124M as cfg
 from services import *
-
-start_context = "United States of America"
-encoded = tokenzier.encode(start_context)
-print(encoded)
-encoded_tensor = torch.tensor(encoded).unsqueeze(0)
-print(encoded_tensor.shape)
+from load_verdict import *
+from train import *
 
 model = GPT2(cfg)
+model.to("cuda")
 
+optimizer = torch.optim.AdamW(
+    model.parameters(), lr=0.0004, weight_decay=0.1
+)
+num_epochs = 1000
 
-model.eval()
-
-out = generate_text_simple(
-    model=model,
-    idx=encoded_tensor,
-    max_new_tokens=6,
-    context_size=cfg["context_length"]
-    )
-
-print("Output:", out)
-print("Output length:", len(out[0]))
-
-decoded_text = tokenzier.decode(out.squeeze(0).tolist())
-print(decoded_text)
+train_losses, val_losses, tokens_seen = train_model_simple(
+    model, train_loader, val_loader, optimizer, device="cuda",
+    numn_epochs=num_epochs, eval_freq=5, eval_iter=5,
+    start_context="I love you", tokenizer=tokenzier
+)
